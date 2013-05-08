@@ -1,0 +1,59 @@
+{% load i18n macro %}{% load url from future %}<!DOCTYPE html>
+<html >
+    <head>
+        <meta charset="utf-8">
+
+        {% macro "page_title" %}{% block page_title %}{% endblock %}{% endmacro %}
+        <title>{% callmacro "page_title" %} | Djangotcha</title>
+        {% macro "page_description" %}{% block page_description %}{% endblock %}{% endmacro %}
+        <meta name="description" content="{% callmacro "page_description" %}">
+
+        <meta name="viewport" content="width=device-width">
+
+        <!-- Facebook Open Graph Tags -->
+        <meta property="og:site_name" content="Djangotcha"/>
+        <meta property="og:title" content="{% callmacro "page_title" %} | Djangotcha"/>
+        <meta property="og:url" content="{{ page_canonical_url }}"/>
+        <meta property="og:image" content="{{ STATIC_URL }}img/favicon.png/"/>
+        <meta property="og:type" content="Article"/>
+
+        <!-- Twitter Card -->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:title" content="{% callmacro "page_title" %} | Djangotcha">
+        <meta name="twitter:description" content="{% callmacro "page_description" %}">
+        <meta name="twitter:url" content="{{ page_canonical_url }}">
+        <meta name="twitter:image" content="{{ STATIC_URL }}img/favicon.png/">
+
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
+        <!--[if lt IE 9]>
+        <link rel="stylesheet" href="{{ STATIC_URL }}css/ie8.css">
+        <script src="{{ STATIC_URL }}js/vendors/html5shiv.js"></script>
+        <![endif]-->
+    </head>
+    <body class="{{page}}">
+        <!-- header -->
+        <header>
+            HEADER
+        </header>
+        <!-- /header -->
+
+        {% block content %}{% endblock %}
+
+        <!-- footer -->
+        <footer>
+            FOOTER
+        </footer>
+        <!-- /footer -->
+
+        {% block data %}{% endblock %}
+
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="{{ STATIC_URL }}js/vendors/jquery-1.9.1.min.js"><\/script>')</script>
+        <!--[if IE]>
+        <script src="{{ STATIC_URL }}js/vendors/jquery.ie.cors.js"></script>
+        <![endif]-->
+        <script src="{{ STATIC_URL }}js/vendors/underscore-1.4.4.min.js"></script>
+        <script src="{{ STATIC_URL }}js/main.js"></script>
+        {% block js_imports %}{% endblock %}
+    </body>
+</html>

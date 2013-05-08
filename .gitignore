@@ -1,0 +1,9 @@
+djangotcha/static/css/style.css
+djangotcha/static/css/ie8.css
+djangotcha/static/css/style.css
+djangotcha/static/js/main.js
+.sass-cache
+.DS_Store
+*.pyc
+settings_local.py
+tmp/*

@@ -1,0 +1,7 @@
+Django==1.5.1
+requests==1.1.0
+-e git://github.com/citylive/django-templatable-view.git@1.1.2#egg=django-templatable-view
+-e git://github.com/citylive/django-utilities.git@1.0.18#egg=django-utilities
+
+# Django template tags extension
+-e git://github.com/citylive/django-template-tags.git@1.1.2#egg=django-template-tags

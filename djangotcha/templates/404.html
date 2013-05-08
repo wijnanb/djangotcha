@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block page_title %}{% trans '404 error' %}{% endblock %}
+{% block page_description %}{% trans 'Whoops, we haven’t actually built this page yet. Come back later?' %}{% endblock %}
+
+{% block content %}
+    <!-- page wrapper -->
+    <div class="page wrapper page-short">
+
+        <!-- content -->
+        <div class="content">
+            <h1>{% trans 'Whoops, we haven’t actually built this page yet. Come back later?' %}</h1>
+        </div>
+        <!-- content -->
+
+    </div>
+    <!-- /page wrapper -->
+{% endblock %}
