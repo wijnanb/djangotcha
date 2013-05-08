@@ -8,7 +8,7 @@
         {% macro "page_description" %}{% block page_description %}{% endblock %}{% endmacro %}
         <meta name="description" content="{% callmacro "page_description" %}">
 
-        <meta name="viewport" content="width=device-width">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- Facebook Open Graph Tags -->
         <meta property="og:site_name" content="Djangotcha"/>
@@ -24,6 +24,8 @@
         <meta name="twitter:url" content="{{ page_canonical_url }}">
         <meta name="twitter:image" content="{{ STATIC_URL }}img/favicon.png/">
 
+        <link href="{{ STATIC_URL }}/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="{{ STATIC_URL }}/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
         <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
         <!--[if lt IE 9]>
         <link rel="stylesheet" href="{{ STATIC_URL }}css/ie8.css">
@@ -31,20 +33,24 @@
         <![endif]-->
     </head>
     <body class="{{page}}">
-        <!-- header -->
-        <header>
-            HEADER
-        </header>
-        <!-- /header -->
+        <div class="container-narrow">
+            <div class="masthead">
+                <ul class="nav nav-pills pull-right">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#rules">Rules</a></li>
+                    <li><a href="#page">My Page</a></li>
+                </ul>
+                <h3 class="muted">Djangotcha</h3>
+            </div>
 
-        {% block content %}{% endblock %}
+            <hr>
 
-        <!-- footer -->
-        <footer>
+            {% block content %}{% endblock %}
+
+            <footer>
             FOOTER
-        </footer>
-        <!-- /footer -->
-
+            </footer>
+        </div>
         {% block data %}{% endblock %}
 
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -53,6 +59,7 @@
         <script src="{{ STATIC_URL }}js/vendors/jquery.ie.cors.js"></script>
         <![endif]-->
         <script src="{{ STATIC_URL }}js/vendors/underscore-1.4.4.min.js"></script>
+        <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
         <script src="{{ STATIC_URL }}js/main.js"></script>
         {% block js_imports %}{% endblock %}
     </body>
