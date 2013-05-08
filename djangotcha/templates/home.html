@@ -5,8 +5,19 @@
 {% block page_title %}{% trans 'Home' %}{% endblock %}
 
 {% block content %}
-    <h2>Sign up with your github account</h2>
-    <img alt="github logo" /> <button>Connect with github</button>
-    <h2>Don't have a github account?</h2>
-    <div>Shame on you! :-)  Go to <a href="http://github.com">http://github.com</a> and create one quickly.</div>
+
+    <div class="jumbotron">
+        <h1>Djangotcha is gonna getcha!</h1>
+        <p class="lead">Sign up with your github account</p>
+        <a class="btn btn-large btn-success" href="#">Connect with github</a>
+    </div>
+
+    <hr>
+
+    <div class="row-fluid marketing">
+        <div class="span6">
+          <h4>Don't have a github account?</h4>
+          <p>Shame on you! :-)  Go to <a href="http://github.com" target="_blank">http://github.com</a> and create one quickly.</p>
+        </div>
+    </div>
 {% endblock %}

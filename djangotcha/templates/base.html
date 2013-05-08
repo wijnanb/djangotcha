@@ -39,6 +39,7 @@
                     <li class="active"><a href="#">Home</a></li>
                     <li><a href="#rules">Rules</a></li>
                     <li><a href="#page">My Page</a></li>
+                    <li><button class="btn btn-success">Sign in</button></li>
                 </ul>
                 <h3 class="muted">Djangotcha</h3>
             </div>
@@ -47,9 +48,11 @@
 
             {% block content %}{% endblock %}
 
-            <footer>
-            FOOTER
-            </footer>
+            <hr>
+
+            <div class="footer">
+                <p>Proudly presented by <a href="http://mobilevikings.com" target="_blank">Mobile Vikings</a> from <a href="http://www.google.be/images?q=belgian+waffles+and+smurfs" target="_blank">Belgium</a>.</p>
+            </div>
         </div>
         {% block data %}{% endblock %}
 
