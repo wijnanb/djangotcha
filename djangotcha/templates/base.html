@@ -39,7 +39,11 @@
                     <li class="active"><a href="#">Home</a></li>
                     <li><a href="#rules">Rules</a></li>
                     <li><a href="#page">My Page</a></li>
-                    <li><button class="btn btn-success">Sign in</button></li>
+                    {% if user.is_authenticated %}
+                        <li><a class="" href="{% url 'socialauth_disconnect_individual' 'github' user.id %}">Sign out</a></li>
+                    {% else %}
+                        <li><a class="" href="{% url 'login' %}">Sign in</a></li>
+                    {% endif %}
                 </ul>
                 <h3 class="muted">Djangotcha</h3>
             </div>

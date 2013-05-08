@@ -49,6 +49,15 @@ STATICFILES_DIRS = ( )
 # SESSION_FILE_PATH = 'path_to_store_sessions_file'
 SESSION_ENGINE = 'django.contrib.sessions.backends.file'
 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'djangotcha',
+        'USER': 'root',
+        'PASSWORD': ''
+    }
+}
+
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
@@ -86,6 +95,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_template_tags',
+    'django.contrib.admin',
+    'social_auth',
     'djangotcha',
 )
 
@@ -112,6 +123,19 @@ LOGGING = {
         },
     }
 }
+
+AUTHENTICATION_BACKENDS = (
+    'social_auth.backends.contrib.github.GithubBackend',
+    'django.contrib.auth.backends.ModelBackend',
+)
+
+LOGIN_URL          = '/login/'
+LOGIN_REDIRECT_URL = '/profile/'
+LOGIN_ERROR_URL    = '/login-error/'
+
+# Develop app: https://github.com/settings/applications/44683
+GITHUB_APP_ID              = '157475f917973a32b319'
+GITHUB_API_SECRET          = '3c49aabd451267a8a9a53791b6df6ebd56703343'
 
 # The absolute location of this website
 SERVER_LOCATION = 'http://localhost:8000/'
