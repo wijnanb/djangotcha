@@ -19,6 +19,8 @@ urlpatterns = i18n_patterns('',
     # url(r'^admin/', include(admin.site.urls)),
 
     url(r'^$', 'djangotcha.views.home', name='home'),
+    url(r'^signin/$', 'djangotcha.views.signin', name='signin'),
+    url(r'^authorized/$', 'djangotcha.views.authorized', name='authorized'),
 )
 
 urlpatterns += patterns('',
