@@ -136,18 +136,9 @@ LOGIN_ERROR_URL    = '/login-error/'
 # Develop app: https://github.com/settings/applications/44683
 GITHUB_APP_ID              = '157475f917973a32b319'
 GITHUB_API_SECRET          = '3c49aabd451267a8a9a53791b6df6ebd56703343'
+GITHUB_REQUEST_TOKEN_URL   = 'https://github.com/login/oauth/access_token'
 
 # The absolute location of this website
 SERVER_LOCATION = 'http://localhost:8000/'
-
-# Develop app: https://github.com/settings/applications/44683
-GITHUB_APP = {
-    'client_id' : '157475f917973a32b319',
-    'client_secret' : '3c49aabd451267a8a9a53791b6df6ebd56703343',
-    'request_token_url': 'https://github.com/login/oauth/authorize',
-    'access_token_url' : 'https://github.com/login/oauth/access_token',
-    'authorize_url': 'https://api.github.com/user',
-    'redirect_url': 'http://localhost:8000/authorized/'
-}
 
 execfile(path_to('djangotcha', 'settings_local.py'))

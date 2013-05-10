@@ -62,7 +62,7 @@ def authorized(request):
                     "client_id": settings.GITHUB_APP_ID,
                     "client_secret": settings.GITHUB_API_SECRET,
                 }
-                r = requests.post("https://github.com/login/oauth/access_token", data=post_data)
+                r = requests.post(settings.GITHUB_REQUEST_TOKEN_URL, data=post_data)
 
                 if r.status_code == 200:
                     github_response = parse_qs(r.content)
