@@ -1,4 +1,5 @@
-from django.http import HttpResponseNotFound, HttpResponseServerError
+from django.http import HttpResponseNotFound, HttpResponseServerError, HttpResponseRedirect
+from django.core.urlresolvers import reverse
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from django.conf import settings
@@ -110,7 +111,22 @@ def authorized(request):
 
     return HttpResponseBadRequest()
 
+@templatable_view('kill')
+def kill(request, user_id):
 
+    p = Person.objects.get(id=user_id)
+    target = p.target
+    secret_word = p.secret_word
+
+    return {
+        'target': target,
+        'secret_word': secret_word,
+        'user_id': user_id,
+    }
+
+@templatable_view('killed')
+def killed(request):
+    return {}
 
 @templatable_view('404')
 def error404(request):

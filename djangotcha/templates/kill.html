@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block page_title %}{% trans 'Kill' %}{% endblock %}
+
+{% block content %}
+
+    <div class="jumbotron">
+        <h1 class="text-center">Your victim!</h1>
+        <p class="text-center lead">
+            This is the person that is on top of you kill list.<br>
+            You have one goal: kill him/her before you get killed!
+        </p>
+
+        <div class="media no-spoiler target">
+            <div class="pull-left">
+                <img src="{{target.avatar_url}}" class="avatar img-rounded"/>
+            </div>
+            <div class="media-body">
+                <h4 class="media-heading">{{target.name}} {{target.id}}</h4>
+                <div class="description">
+                    Hit him with a ray of water.  But remember: your kill is only valid when there are no witnesses around.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="jumbotron">
+        <h1 class="text-center">Oh no, i'm killed!</h1>
+        <p class="text-center lead">
+            When you are killed, you should give this secret word to the murderer. With this word he can register the kill.
+        </p>
+
+        <div class="media no-spoiler secret_word text-large">
+            <h2>{{secret_word}}</h2>
+        </div>
+
+    </div>
+
+    <hr>
+
+    <div class="jumbotron">
+        <h1 class="text-center">You killed someone!</h1>
+        <p class="text-center lead">
+            Allright! Keep up the streak.<br>
+            Register the kill here, and find out who will be your next target.
+        </p>
+
+        {% if error_message %}<div class="alert alert-error">{{ error_message }}</div>{% endif %}
+
+        <form class="form" action="{% url 'killed' %}" method="post">
+            {% csrf_token %}
+
+                <label class="control-label text-center" for="secret_word">The secret word that your victim told you right before he died.</label>
+
+                <div class="input-append">
+                    <input type="text" class="span2 input-large" id="secret_word" name="secret_word" placeholder="secret word">
+                    <button class="btn btn-danger" type="submit">Finish him!!</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
