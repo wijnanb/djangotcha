@@ -7,9 +7,9 @@
 {% block content %}
 
     <div class="jumbotron">
-        <h1>Djangotcha is gonna getcha!</h1>
-        <p class="lead">Sign up with your github account</p>
-        <a class="btn btn-large btn-success" href="{% url 'socialauth_begin' 'github' %}">Connect with github</a>
+        <h1>Sign up with your github account</h1>
+        <p>No need for a new account. Connect with Github here.</p>
+        <a class="btn btn-large btn-success" href="{% url 'socialauth_begin' 'github' %}">Oauth with github</a>
     </div>
 
     <hr>
@@ -20,7 +20,5 @@
           <p>Shame on you! :-)  Go to <a href="http://github.com" target="_blank">http://github.com</a> and create one quickly.</p>
         </div>
     </div>
-        {
-
 
 {% endblock %}

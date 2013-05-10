@@ -115,10 +115,12 @@ def authorized(request):
 def kill(request, user_id):
 
     p = Person.objects.get(id=user_id)
+    username = p.name
     target = p.target
     secret_word = p.secret_word
 
     return {
+        'username': username,
         'target': target,
         'secret_word': secret_word,
         'user_id': user_id,
@@ -126,6 +128,10 @@ def kill(request, user_id):
 
 @templatable_view('killed')
 def killed(request):
+    return {}
+
+@templatable_view('home')
+def rules(request):
     return {}
 
 @templatable_view('404')
