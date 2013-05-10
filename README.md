@@ -28,3 +28,8 @@ Desktop website for place management for citylife.
 
     ## Compile PO files to MO format
     python manage.py compilemessages
+    
+    
+# Assign random target to everyone
+	
+	./manage.py assign_targets

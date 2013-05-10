@@ -10,6 +10,8 @@ from github import Github
 import requests
 import json
 
+from models import Person
+
 # Decorators
 def templatable_view(template_name):
     def decorator(view):
@@ -32,6 +34,16 @@ def templatable_view(template_name):
             return render_to_response(template, context, context_instance=RequestContext(request))
         return wrapped_view
     return decorator
+
+
+def _create_user(user_info):
+    p = Person(
+        name=user_info['name'],
+        avatar_url=user_info['avatar_url'],
+        github_user_id=user_info['user_id']
+    )
+    p.save()
+
 
 # Views
 @templatable_view('home')
@@ -88,6 +100,8 @@ def authorized(request):
                             }
 
                             print user_info
+
+                            _create_user(user_info)
 
                             return user_info
 

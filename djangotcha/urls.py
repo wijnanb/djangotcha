@@ -7,10 +7,9 @@ from django.contrib import admin
 
 from utilities.language import set_language
 
-
 # Uncomment the next two lines to enable the admin:
 # from django.contrib import admin
-# admin.autodiscover()
+admin.autodiscover()
 
 urlpatterns = i18n_patterns('',
     # Uncomment the admin/doc line below to enable admin documentation:
@@ -38,3 +37,5 @@ urlpatterns += patterns('',
 )
 
 urlpatterns += staticfiles_urlpatterns()
+
+
