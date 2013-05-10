@@ -1,10 +1,14 @@
-from django.http import HttpResponseNotFound
+from django.http import HttpResponseNotFound, HttpResponseServerError
 from django.shortcuts import render, render_to_response
 from django.template import RequestContext
 from django.conf import settings
 from django.utils import translation
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
+from urlparse import urlparse, parse_qs
+from github import Github
+import requests
+import json
 
 # Decorators
 def templatable_view(template_name):
@@ -45,7 +49,52 @@ def login(request):
 
 @templatable_view('authorized')
 def authorized(request):
-    return {}
+
+    if 'redirect_state' in request.REQUEST and 'state' in request.REQUEST:
+        if request.REQUEST['redirect_state'] == request.REQUEST['state']:
+
+            if 'code' in request.REQUEST:
+                code = request.REQUEST['code']
+
+                # fetch an access_token
+                post_data =  {
+                    "code": code,
+                    "client_id": settings.GITHUB_APP_ID,
+                    "client_secret": settings.GITHUB_API_SECRET,
+                }
+                r = requests.post("https://github.com/login/oauth/access_token", data=post_data)
+
+                if r.status_code == 200:
+                    github_response = parse_qs(r.content)
+                    print github_response
+
+                    if 'error' in github_response:
+                        return HttpResponseServerError(github_response['error'][0])
+                    else:
+                        if 'access_token' in github_response:
+                            access_token = github_response['access_token'][0]
+
+                            github = Github(access_token)
+                            user = github.get_user()
+
+                            #see: https://github.com/jacquev6/PyGithub/blob/master/github/AuthenticatedUser.py
+                            user_info = {
+                                "avatar_url": user.avatar_url,
+                                "company": user.company,
+                                "email": user.email,
+                                "user_id": user.id,
+                                "location": user.location,
+                                "name": user.name,
+                            }
+
+                            print user_info
+
+                            return user_info
+
+                else:
+                    return HttpResponseServerError()
+
+    return HttpResponseBadRequest()
 
 
 
