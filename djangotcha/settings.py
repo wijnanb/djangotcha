@@ -138,6 +138,10 @@ GITHUB_APP_ID              = '157475f917973a32b319'
 GITHUB_API_SECRET          = '3c49aabd451267a8a9a53791b6df6ebd56703343'
 GITHUB_REQUEST_TOKEN_URL   = 'https://github.com/login/oauth/access_token'
 
+SECRET_WORDS = [
+    'word1', 'word2', 'word3', 'word4', 'word5'
+]
+
 # The absolute location of this website
 SERVER_LOCATION = 'http://localhost:8000/'
 

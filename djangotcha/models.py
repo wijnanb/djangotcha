@@ -7,6 +7,7 @@ class Person(models.Model):
     is_killed = models.BooleanField(default=False)
     date_killed = models.DateField(null=True)
     target = models.ForeignKey('self',null=True)
+    secret_word = models.CharField(max_length=64)
 
     def __unicode__(self):
         return "%s[%d]" % (self.name, self.id)

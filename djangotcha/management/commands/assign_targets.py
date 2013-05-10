@@ -1,5 +1,6 @@
 from django.core.management.base import BaseCommand, CommandError
 from djangotcha.models import Person
+from django.conf import settings
 import random
 
 class Command(BaseCommand):
@@ -11,6 +12,9 @@ class Command(BaseCommand):
 
         indices = range(len(persons))
         random.shuffle(indices)
+
+        secret_words = settings.SECRET_WORDS
+        random.shuffle(secret_words)
 
         # you cannot target yourself
         # first make sure last one is not himself
@@ -33,10 +37,12 @@ class Command(BaseCommand):
         for p in persons:
             index = indices[i]
             target = persons[index]
+            secret_word = secret_words[ i % len(secret_words) ]
 
             self.stdout.write('assigned: %s #\'== ~> %s' % (p,target))
 
             p.target = target
+            p.secret_word = secret_word
             p.save()
             i += 1
 
