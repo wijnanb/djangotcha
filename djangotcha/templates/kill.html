@@ -6,6 +6,17 @@
 
 {% block content %}
 
+    {% if is_killed %}
+        <div class="jumbotron">
+            <h1 class="text-center">Hi {{username}}, you are dead!</h1>
+            <p class="text-center lead">
+                Cause of death: struck by a ray of water.<br>
+                You are out of the game.  Don't tell anyone you are dead, that makes it more fun for the ones still playing.
+            </p>
+        </div>
+
+    {% else %}
+
     <div class="jumbotron">
         <h1 class="text-center">Hi {{username}}, this is your victim!</h1>
         <p class="text-center lead">
@@ -51,7 +62,7 @@
 
         {% if error_message %}<div class="alert alert-error">{{ error_message }}</div>{% endif %}
 
-        <form class="form" action="{% url 'killed' %}" method="post">
+        <form class="form" action="" method="post">
             {% csrf_token %}
 
                 <label class="control-label text-center" for="secret_word">The secret word that your victim told you right before he died.</label>
@@ -63,4 +74,5 @@
             </div>
         </form>
     </div>
+    {% endif %}
 {% endblock %}

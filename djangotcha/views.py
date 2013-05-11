@@ -10,6 +10,7 @@ from urlparse import urlparse, parse_qs
 from github import Github
 import requests
 import json
+import datetime
 
 from models import Person
 
@@ -118,17 +119,35 @@ def kill(request, user_id):
     username = p.name
     target = p.target
     secret_word = p.secret_word
+    is_killed = p.is_killed
+
+    error = None
+
+    if 'secret_word' in request.POST:
+        kill_secret_word = request.POST['secret_word']
+
+        import pdb
+        pdb.set_trace()
+
+        if target.secret_word == kill_secret_word:
+            target.is_killed = True
+            target.date_killed = datetime.datetime.now()
+            target.save()
+
+            p.target = target.target
+            p.save()
+        else:
+            error = "secret_word not correct"
+
 
     return {
+        'error': error,
+        'is_killed': is_killed,
         'username': username,
         'target': target,
         'secret_word': secret_word,
         'user_id': user_id,
     }
-
-@templatable_view('killed')
-def killed(request):
-    return {}
 
 @templatable_view('home')
 def rules(request):
