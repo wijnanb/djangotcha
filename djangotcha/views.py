@@ -53,7 +53,6 @@ def _create_user(user_info):
 
     user, created = User.objects.get_or_create(username=user_info['login'], defaults={
         'username': user_info['login'],
-        'backend': 'social_auth.backends.contrib.github.GithubBackend',
         'first_name': firstname,
         'last_name': lastname,
         'email': user_info['email'],
@@ -80,7 +79,20 @@ def _game_is_started():
 # Views
 @templatable_view('home')
 def home(request):
-    return {}
+    avatar_url = None
+
+    if request.user.is_authenticated():
+        if _game_is_started():
+            return HttpResponseRedirect(reverse('kill', request.user.id))
+        else:
+            p = Person.objects.get(user__id=request.user.id)
+            avatar_url = p.avatar_url
+
+    return {
+        'avatar_url': avatar_url,
+        'game_is_started': _game_is_started(),
+        "start": settings.GAME_STARTS_AT.strftime('%d/%m/%y %H:%M')
+    }
 
 @login_required
 @templatable_view('profile')
@@ -91,18 +103,6 @@ def profile(request):
 def login(request):
     return {}
 
-@templatable_view('waiting')
-def waiting(request):
-    print "_game_is_started: %s" % _game_is_started()
-
-    if _game_is_started():
-        return HttpResponseRedirect(reverse('home'))
-
-    return {
-        "start": settings.GAME_STARTS_AT.strftime('%d/%m/%y %H:%M')
-    }
-
-@templatable_view('authorized')
 def authorized(request):
 
     if 'redirect_state' in request.REQUEST and 'state' in request.REQUEST:
@@ -145,7 +145,7 @@ def authorized(request):
 
                             user, person = _create_user(user_info)
                             auth_login(request, user)
-                            return HttpResponseRedirect(reverse('kill', kwargs={'user_id': user.id}))
+                            return HttpResponseRedirect(reverse('home', kwargs={'user_id': user.id}))
                 else:
                     return HttpResponseServerError()
 
@@ -159,7 +159,7 @@ def kill(request, user_id):
     print "_game_is_started: %s" % _game_is_started()
 
     if not _game_is_started():
-        return HttpResponseRedirect(reverse('waiting'))
+        return HttpResponseRedirect(reverse('home'))
 
 
     p = Person.objects.get(user__id=user_id)
@@ -195,7 +195,7 @@ def kill(request, user_id):
         'user_id': user_id,
     }
 
-@templatable_view('home')
+@templatable_view('rules')
 def rules(request):
     return {}
 

@@ -5,18 +5,33 @@
 {% block page_title %}{% trans 'Home' %}{% endblock %}
 
 {% block content %}
-    <div class="jumbotron">
-        <h1>DjanGotcha is gonna getcha!</h1>
-        <p class="lead">Sign up with your github account</p>
-        <a class="btn btn-large btn-success" href="{% url 'login' %}">Sign up now</a>
-    </div>
 
-    <hr>
+    {% if request.user.is_authenticated %}
+        <div class="jumbotron">
+            <h1>Welcome, {{ request.user.username }}!</h1>
+            <p><img src="{{ request.user.avatar_url }}" class="img-rounded"/> This is your picture. Your assisins will see this picture.</p>
+        </div>
+
+        {% if waiting %}
+        <div class="row-fluid marketing">
+            <div class="span6">
+              <h4>The game will start soon</h4>
+              <p>To be more precise, at {{start}}.</p>
+            </div>
+        </div>
+        {% endif %}
+    {% else %}
+        <div class="jumbotron">
+            <h1>DjanGotcha is gonna getcha!</h1>
+            <p class="lead">Sign up with your github account</p>
+            <a class="btn btn-large btn-success" href="{% url 'login' %}">Sign up now</a>
+        </div>
+    {% endif %}
 
     <div class="row-fluid marketing">
         <div class="span6">
-          <h4>Some info here</h4>
-          <p>Info info info info.</p>
+          <h4>Gotcha a DjangoCon</h4>
+          <p>During the 3 day conference we will play a Gotcha game. </p>
         </div>
     </div>
 {% endblock %}

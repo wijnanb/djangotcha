@@ -13,11 +13,9 @@ urlpatterns = patterns('',
     url(r'^login/$', 'djangotcha.views.login', name='login'),
     url(r'^logout/$', auth_views.logout, {'template_name': 'logout.html'}, name='logout'),
     url(r'^complete/github/$', 'djangotcha.views.authorized', name='authorized'),
-    url(r'^profile/$', 'djangotcha.views.profile', name='profile'),
 
     url(r'^kill/(?P<user_id>\d+)$', 'djangotcha.views.kill', name='kill'),
     url(r'^rules/$', 'djangotcha.views.rules', name='rules'),
-    url(r'^waiting/$', 'djangotcha.views.waiting', name='waiting'),
 
     # Social auth
     url(r'', include('social_auth.urls')),
