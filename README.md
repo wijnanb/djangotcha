@@ -1,7 +1,7 @@
-citylife-website
+Djangotcha
 ================
 
-Desktop website for place management for citylife.
+Desktop website for place management for Djangotcha.
 
 # Install dependencies
 

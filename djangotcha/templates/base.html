@@ -11,7 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <!-- Facebook Open Graph Tags -->
-        <meta property="og:site_name" content="Djangotcha"/>
+        <meta property="og:site_name" content="DjanGotcha"/>
         <meta property="og:title" content="{% callmacro "page_title" %} | Djangotcha"/>
         <meta property="og:url" content="{{ page_canonical_url }}"/>
         <meta property="og:image" content="{{ STATIC_URL }}img/favicon.png/"/>
@@ -27,6 +27,7 @@
         <link href="{{ STATIC_URL }}/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link href="{{ STATIC_URL }}/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
         <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
+        <link rel="shortcut icon" href="https://mobilevikings.com/static-2013.05.13.1dfd899/favicon.ico" type="image/x-icon" />
         <!--[if lt IE 9]>
         <link rel="stylesheet" href="{{ STATIC_URL }}css/ie8.css">
         <script src="{{ STATIC_URL }}js/vendors/html5shiv.js"></script>
@@ -51,7 +52,8 @@
             <hr>
 
             <div class="footer">
-                <p>Proudly presented by <a href="http://mobilevikings.com" target="_blank">Mobile Vikings</a> from <a href="http://www.google.be/images?q=belgian+waffles+and+smurfs" target="_blank">Belgium</a>.</p>
+                <p class="pull-left">Proudly presented by <a href="https://mobilevikings.com" target="_blank">Mobile Vikings</a> from <a href="http://www.google.be/images?q=belgian+waffles+and+smurfs" target="_blank">Belgium</a>.</p>
+                <p class="pull-right">Questions? <a href="https://twitter.com/search/realtime?q=%23djangotcha&src=hash" target="_blank">#djangotcha</a></p>
             </div>
         </div>
         {% block data %}{% endblock %}

@@ -1,5 +1,3 @@
-# Django settings for citylife_website project.
-
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
@@ -17,9 +15,6 @@ CACHES = {
 
 ADMINS = ( )
 MANAGERS = ADMINS
-
-
-MAIL_PRESS = "press@citylifeapp.com"
 
 TIME_ZONE = 'Europe/Brussels'
 
@@ -129,14 +124,14 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-LOGIN_URL          = '/login/'
+LOGIN_URL = '/login/'
 LOGIN_REDIRECT_URL = '/profile/'
-LOGIN_ERROR_URL    = '/login-error/'
+LOGIN_ERROR_URL = '/login-error/'
 
 # Develop app: https://github.com/settings/applications/44683
-GITHUB_APP_ID              = '157475f917973a32b319'
-GITHUB_API_SECRET          = '3c49aabd451267a8a9a53791b6df6ebd56703343'
-GITHUB_REQUEST_TOKEN_URL   = 'https://github.com/login/oauth/access_token'
+GITHUB_APP_ID = '157475f917973a32b319'
+GITHUB_API_SECRET = '3c49aabd451267a8a9a53791b6df6ebd56703343'
+GITHUB_REQUEST_TOKEN_URL = 'https://github.com/login/oauth/access_token'
 
 SECRET_WORDS = [
     'word1', 'word2', 'word3', 'word4', 'word5'
@@ -145,4 +140,7 @@ SECRET_WORDS = [
 # The absolute location of this website
 SERVER_LOCATION = 'http://localhost:8000/'
 
-execfile(path_to('djangotcha', 'settings_local.py'))
+try:
+    execfile(path_to('djangotcha', 'settings_local.py'))
+except:
+    pass

@@ -17,7 +17,7 @@ from models import Person
 # Decorators
 def templatable_view(template_name):
     def decorator(view):
-        def wrapped_view(request, *a ,**kw):
+        def wrapped_view(request, *a, **kw):
             result = view(request, *a, **kw)
             lang = translation.get_language()
 
@@ -71,7 +71,7 @@ def authorized(request):
                 code = request.REQUEST['code']
 
                 # fetch an access_token
-                post_data =  {
+                post_data = {
                     "code": code,
                     "client_id": settings.GITHUB_APP_ID,
                     "client_secret": settings.GITHUB_API_SECRET,

@@ -7,3 +7,5 @@ djangotcha/static/js/main.js
 *.pyc
 settings_local.py
 tmp/*
+
+.idea/*
