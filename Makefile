@@ -24,3 +24,9 @@ watch:
 	coffee --watch --compile --join djangotcha/static/js/main.js source/coffeescript/* &
 	coffee --watch --compile --output tmp/ source/coffeescript/* &
 	cd source; compass watch; cd -;
+
+reload:
+	git pull;
+	make compass;
+	sudo service djangotcha restart;
+

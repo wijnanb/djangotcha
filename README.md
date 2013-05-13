@@ -1,8 +1,3 @@
-Djangotcha
-================
-
-Desktop website for place management for Djangotcha.
-
 # Install dependencies
 
     mkvirtualenv djangotcha
