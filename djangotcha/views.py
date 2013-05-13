@@ -51,30 +51,41 @@ def _create_user(user_info):
         firstname = user_info.get('name', None)
         lastname = None
 
-    user, created = User.objects.get_or_create(username=user_info['login'], defaults={
-        'username': user_info['login'],
-        'first_name': firstname,
-        'last_name': lastname,
-        'email': user_info['email'],
-        'is_staff': False,
-        'is_active': True,
-        'is_superuser': False
-    })
-    user.backend = 'social_auth.backends.contrib.github.GithubBackend'
-    user.save()
+    try:
+        if _subscriptions_ended():
+            user, created = User.objects.get(username=user_info['login'])
+        else:
+            user, created = User.objects.get_or_create(username=user_info['login'], defaults={
+                'username': user_info['login'],
+                'first_name': firstname,
+                'last_name': lastname,
+                'email': user_info['email'],
+                'is_staff': False,
+                'is_active': True,
+                'is_superuser': False
+            })
 
-    person, created = Person.objects.get_or_create(user=user, defaults={
-        'name': user_info['name'],
-        'avatar_url': user_info['avatar_url'],
-        'github_user_id': user_info['user_id'],
-        'company': user_info['company'],
-        'location': user_info['location']
-    })
-    return user, person
 
+        user.backend = 'social_auth.backends.contrib.github.GithubBackend'
+        user.save()
+
+        person, created = Person.objects.get_or_create(user=user, defaults={
+            'name': user_info['name'],
+            'avatar_url': user_info['avatar_url'],
+            'github_user_id': user_info['user_id'],
+            'company': user_info['company'],
+            'location': user_info['location']
+        })
+        return user, person
+
+    except User.DoesNotExist:
+        return None, None
 
 def _game_is_started():
     return datetime.now() >= settings.GAME_STARTS_AT
+
+def _subscriptions_ended():
+    return datetime.now() >= settings.SUBSCRIPTIONS_END_AT
 
 # Views
 @templatable_view('home')
@@ -83,14 +94,14 @@ def home(request):
 
     if request.user.is_authenticated():
         if _game_is_started():
-            return HttpResponseRedirect(reverse('kill', request.user.id))
+            return HttpResponseRedirect(reverse('kill', kwargs={'user_id':request.user.id}))
         else:
             p = Person.objects.get(user__id=request.user.id)
             avatar_url = p.avatar_url
 
     return {
         'avatar_url': avatar_url,
-        'game_is_started': _game_is_started(),
+        'waiting': not _game_is_started(),
         "start": settings.GAME_STARTS_AT.strftime('%d/%m/%y %H:%M')
     }
 
@@ -144,8 +155,12 @@ def authorized(request):
                             }
 
                             user, person = _create_user(user_info)
-                            auth_login(request, user)
-                            return HttpResponseRedirect(reverse('home', kwargs={'user_id': user.id}))
+
+                            if user:
+                                auth_login(request, user)
+                                return HttpResponseRedirect(reverse('home'))
+                            else:
+                                return HttpResponseRedirect(reverse('closed'))
                 else:
                     return HttpResponseServerError()
 
@@ -197,6 +212,10 @@ def kill(request, user_id):
 
 @templatable_view('rules')
 def rules(request):
+    return {}
+
+@templatable_view('closed')
+def closed(request):
     return {}
 
 @templatable_view('404')

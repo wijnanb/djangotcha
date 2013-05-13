@@ -9,8 +9,20 @@
     {% if request.user.is_authenticated %}
         <div class="jumbotron">
             <h1>Welcome, {{ request.user.username }}!</h1>
-            <p><img src="{{ request.user.avatar_url }}" class="img-rounded"/> This is your picture. Your assisins will see this picture.</p>
+            <div class="media">
+                <div class="pull-left">
+                    <img src="{{avatar_url}}" class="avatar img-rounded"/>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading">This is your picture.</h4>
+                    <div class="description">
+                        Your assisins will see this picture.<br>
+                    </div>
+                </div>
+            </div>
         </div>
+
+
 
         {% if waiting %}
         <div class="row-fluid marketing">
