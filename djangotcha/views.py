@@ -6,11 +6,12 @@ from django.conf import settings
 from django.utils import translation
 from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from urlparse import urlparse, parse_qs
 from github import Github
 import requests
 import json
-import datetime
+from datetime import datetime
 
 from models import Person
 
@@ -20,6 +21,9 @@ def templatable_view(template_name):
         def wrapped_view(request, *a ,**kw):
             result = view(request, *a, **kw)
             lang = translation.get_language()
+
+            if not isinstance(result,dict):
+                return result
 
             # current_url = resolve(request.path_info).url_name
             context = {
@@ -46,6 +50,8 @@ def _create_user(user_info):
     )
     p.save()
 
+def _game_is_started():
+    return datetime.now() >= settings.GAME_STARTS_AT
 
 # Views
 @templatable_view('home')
@@ -60,6 +66,17 @@ def profile(request):
 @templatable_view('login')
 def login(request):
     return {}
+
+@templatable_view('waiting')
+def waiting(request):
+    print "_game_is_started: %s" % _game_is_started()
+
+    if _game_is_started():
+        return HttpResponseRedirect(reverse('home'))
+
+    return {
+        "start": settings.GAME_STARTS_AT.strftime('%d/%m/%y %H:%M')
+    }
 
 @templatable_view('authorized')
 def authorized(request):
@@ -115,36 +132,42 @@ def authorized(request):
 @templatable_view('kill')
 def kill(request, user_id):
 
+    print "_game_is_started: %s" % _game_is_started()
+
+    if not _game_is_started():
+        return HttpResponseRedirect(reverse('waiting'))
+
+
     p = Person.objects.get(id=user_id)
     username = p.name
-    target = p.target
     secret_word = p.secret_word
     is_killed = p.is_killed
 
     error = None
+    message = None
 
     if 'secret_word' in request.POST:
         kill_secret_word = request.POST['secret_word']
 
-        import pdb
-        pdb.set_trace()
+        if p.target.secret_word == kill_secret_word:
+            p.target.is_killed = True
+            p.target.date_killed = datetime.datetime.now()
+            p.target.save()
 
-        if target.secret_word == kill_secret_word:
-            target.is_killed = True
-            target.date_killed = datetime.datetime.now()
-            target.save()
-
-            p.target = target.target
+            p.target = p.target.target
             p.save()
+
+            message = "You've just killed your target.  Now kill the next one."
         else:
-            error = "secret_word not correct"
+            error = "That's not the right word.  The kill is not registered."
 
 
     return {
+        'message': message,
         'error': error,
         'is_killed': is_killed,
         'username': username,
-        'target': target,
+        'target': p.target,
         'secret_word': secret_word,
         'user_id': user_id,
     }
