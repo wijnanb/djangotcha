@@ -3,6 +3,7 @@ from djangotcha.models import Person
 from django.conf import settings
 import random
 
+
 class Command(BaseCommand):
     args = ''
     help = 'Assign random targets to everyone'

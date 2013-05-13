@@ -4,6 +4,7 @@ from django.conf.urls.defaults import patterns, include, url
 from django.conf.urls.i18n import i18n_patterns
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 
 from utilities.language import set_language
 
@@ -20,6 +21,7 @@ urlpatterns = i18n_patterns('',
 
     url(r'^$', 'djangotcha.views.home', name='home'),
     url(r'^login/$', 'djangotcha.views.login', name='login'),
+    url(r'^logout/$', auth_views.logout, {'template_name': 'logout.html'}, name='logout'),
     url(r'^complete/github/$', 'djangotcha.views.authorized', name='authorized'),
     url(r'^profile/$', 'djangotcha.views.profile', name='profile'),
 

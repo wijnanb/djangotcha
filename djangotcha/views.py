@@ -1,19 +1,19 @@
-from django.http import HttpResponseNotFound, HttpResponseServerError, HttpResponseRedirect
+from django.http import HttpResponseServerError, HttpResponseRedirect, HttpResponseBadRequest
 from django.core.urlresolvers import reverse
-from django.shortcuts import render, render_to_response
+from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
+from django.contrib.auth.models import User
+from django.contrib.auth import login as auth_login
 from django.utils import translation
-from django.core.mail import send_mail
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
-from urlparse import urlparse, parse_qs
+from urlparse import parse_qs
 from github import Github
 import requests
-import json
 from datetime import datetime
 
 from models import Person
+
 
 # Decorators
 def templatable_view(template_name):
@@ -43,12 +43,36 @@ def templatable_view(template_name):
 
 
 def _create_user(user_info):
-    p = Person(
-        name=user_info['name'],
-        avatar_url=user_info['avatar_url'],
-        github_user_id=user_info['user_id']
-    )
-    p.save()
+    try:
+        tmp_name = user_info['name'].split(' ')
+        firstname = tmp_name[0]
+        lastname = tmp_name[1]
+    except:
+        firstname = user_info.get('name', None)
+        lastname = None
+
+    user, created = User.objects.get_or_create(username=user_info['login'], defaults={
+        'username': user_info['login'],
+        'backend': 'social_auth.backends.contrib.github.GithubBackend',
+        'first_name': firstname,
+        'last_name': lastname,
+        'email': user_info['email'],
+        'is_staff': False,
+        'is_active': True,
+        'is_superuser': False
+    })
+    user.backend = 'social_auth.backends.contrib.github.GithubBackend'
+    user.save()
+
+    person, created = Person.objects.get_or_create(user=user, defaults={
+        'name': user_info['name'],
+        'avatar_url': user_info['avatar_url'],
+        'github_user_id': user_info['user_id'],
+        'company': user_info['company'],
+        'location': user_info['location']
+    })
+    return user, person
+
 
 def _game_is_started():
     return datetime.now() >= settings.GAME_STARTS_AT
@@ -116,19 +140,19 @@ def authorized(request):
                                 "user_id": user.id,
                                 "location": user.location,
                                 "name": user.name,
+                                "login": user.login,
                             }
 
-                            print user_info
-
-                            _create_user(user_info)
-
-                            return user_info
-
+                            user, person = _create_user(user_info)
+                            auth_login(request, user)
+                            return HttpResponseRedirect(reverse('kill', kwargs={'user_id': user.id}))
                 else:
                     return HttpResponseServerError()
 
     return HttpResponseBadRequest()
 
+
+@login_required
 @templatable_view('kill')
 def kill(request, user_id):
 
@@ -138,7 +162,7 @@ def kill(request, user_id):
         return HttpResponseRedirect(reverse('waiting'))
 
 
-    p = Person.objects.get(id=user_id)
+    p = Person.objects.get(user__id=user_id)
     username = p.name
     secret_word = p.secret_word
     is_killed = p.is_killed
@@ -160,7 +184,6 @@ def kill(request, user_id):
             message = "You've just killed your target.  Now kill the next one."
         else:
             error = "That's not the right word.  The kill is not registered."
-
 
     return {
         'message': message,

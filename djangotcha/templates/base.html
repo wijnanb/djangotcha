@@ -4,7 +4,7 @@
         <meta charset="utf-8">
 
         {% macro "page_title" %}{% block page_title %}{% endblock %}{% endmacro %}
-        <title>{% callmacro "page_title" %} | Djangotcha</title>
+        <title>{% callmacro "page_title" %} | DjanGotcha</title>
         {% macro "page_description" %}{% block page_description %}{% endblock %}{% endmacro %}
         <meta name="description" content="{% callmacro "page_description" %}">
 
@@ -40,9 +40,13 @@
                     <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'rules' %}">Rules</a></li>
                     <li><a href="{% url 'kill' 1 %}">My Page</a></li>
+                    {% if not request.user.is_authenticated %}
                     <li><a class="" href="{% url 'login' %}">Sign in</a></li>
+                    {% else %}
+                    <li><a class="" href="{% url 'logout' %}">Logout</a></li>
+                    {% endif %}
                 </ul>
-                <h3 class="muted">Djangotcha</h3>
+                <h3 class="muted">DjanGotcha</h3>
             </div>
 
             <hr>

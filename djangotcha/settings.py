@@ -91,6 +91,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django_template_tags',
     'django.contrib.admin',
+    'south',
     'social_auth',
     'djangotcha',
 )
@@ -138,7 +139,7 @@ SECRET_WORDS = [
 ]
 
 from datetime import datetime
-GAME_STARTS_AT = datetime.strptime('12/5/2013 12:00', '%d/%m/%Y %H:%M')
+GAME_STARTS_AT = datetime.strptime('15/5/2013 12:00', '%d/%m/%Y %H:%M')
 
 # The absolute location of this website
 SERVER_LOCATION = 'http://localhost:8000/'
