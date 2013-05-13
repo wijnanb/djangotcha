@@ -39,14 +39,13 @@
                 <ul class="nav nav-pills pull-right">
                     <li><a href="{% url 'home' %}">Home</a></li>
                     <li><a href="{% url 'rules' %}">Rules</a></li>
-                    <li><a href="{% url 'kill' 1 %}">My Page</a></li>
                     {% if not request.user.is_authenticated %}
                     <li><a class="" href="{% url 'login' %}">Sign in</a></li>
                     {% else %}
                     <li><a class="" href="{% url 'logout' %}">Logout</a></li>
                     {% endif %}
                 </ul>
-                <h3 class="muted">DjanGotcha</h3>
+                <h3 class="muted"><a href="/" title="E.T. Goes home ...">DjanGotcha</a></h3>
             </div>
 
             <hr>
