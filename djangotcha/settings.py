@@ -147,7 +147,7 @@ SECRET_WORDS = [
 
 from datetime import datetime
 SUBSCRIPTIONS_END_AT = datetime.strptime('13/5/2013 12:00', '%d/%m/%Y %H:%M')
-GAME_STARTS_AT = datetime.strptime('15/5/2013 12:00', '%d/%m/%Y %H:%M')
+GAME_STARTS_AT = datetime.strptime('13/5/2013 12:00', '%d/%m/%Y %H:%M')
 
 # The absolute location of this website
 SERVER_LOCATION = 'http://localhost:8000/'
