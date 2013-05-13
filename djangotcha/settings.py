@@ -132,7 +132,13 @@ LOGIN_ERROR_URL = '/login-error/'
 # Develop app: https://github.com/settings/applications/44683
 GITHUB_APP_ID = '157475f917973a32b319'
 GITHUB_API_SECRET = '3c49aabd451267a8a9a53791b6df6ebd56703343'
+
+# Production app: https://github.com/settings/applications/45276
+#GITHUB_APP_ID = '96ab216ba8a17601e21d'
+#GITHUB_API_SECRET = '5479588d0dfac4c8e1b2d3dc2467f632be5f71c2'
+
 GITHUB_REQUEST_TOKEN_URL = 'https://github.com/login/oauth/access_token'
+
 
 SECRET_WORDS = [
     'word1', 'word2', 'word3', 'word4', 'word5'
