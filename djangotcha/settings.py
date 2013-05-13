@@ -137,6 +137,9 @@ SECRET_WORDS = [
     'word1', 'word2', 'word3', 'word4', 'word5'
 ]
 
+from datetime import datetime
+GAME_STARTS_AT = datetime.strptime('12/5/2013 12:00', '%d/%m/%Y %H:%M')
+
 # The absolute location of this website
 SERVER_LOCATION = 'http://localhost:8000/'
 

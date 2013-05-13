@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block page_title %}{% trans 'Home' %}{% endblock %}
+
+{% block content %}
+
+    <div class="jumbotron">
+        <h1>The game will start soon!</h1>
+        <p>To be more precise, at {{start}}.</p>
+    </div>
+
+{% endblock %}

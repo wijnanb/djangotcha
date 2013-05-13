@@ -25,6 +25,7 @@ urlpatterns = i18n_patterns('',
 
     url(r'^kill/(?P<user_id>\d+)$', 'djangotcha.views.kill', name='kill'),
     url(r'^rules/$', 'djangotcha.views.rules', name='rules'),
+    url(r'^waiting/$', 'djangotcha.views.waiting', name='waiting'),
 
     # Social auth
     url(r'', include('social_auth.urls')),
