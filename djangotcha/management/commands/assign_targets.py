@@ -43,6 +43,8 @@ class Command(BaseCommand):
 
             p.target = target
             p.secret_word = secret_word
+            p.is_killed = False
+            p.date_killed = None
             p.save()
             i += 1
 
