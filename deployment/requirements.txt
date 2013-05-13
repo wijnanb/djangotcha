@@ -1,6 +1,8 @@
 Django==1.5.1
 South==0.7.6
 requests==1.1.0
+gunicorn==0.17.2
+
 -e git://github.com/citylive/django-templatable-view.git@1.1.2#egg=django-templatable-view
 -e git://github.com/citylive/django-utilities.git@1.0.18#egg=django-utilities
 

@@ -1,0 +1,19 @@
+server {
+    listen 80;
+    server_name djangotcha.mobilevikings.com;
+    proxy_set_header Host                   $host;
+
+    location /static {
+        autoindex on;
+        alias /home/ubuntu/git/djangotcha/djangotcha/static;
+    }
+
+    location / {
+        try_files $uri @gunicorn;
+    }
+
+    location @gunicorn {
+
+        proxy_pass http://localhost:8000;
+    }
+}

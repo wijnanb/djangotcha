@@ -92,6 +92,7 @@ INSTALLED_APPS = (
     'django_template_tags',
     'django.contrib.admin',
     'south',
+    'gunicorn',
     'social_auth',
     'djangotcha',
 )
