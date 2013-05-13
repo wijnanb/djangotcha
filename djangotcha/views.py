@@ -1,4 +1,7 @@
-from django.http import HttpResponseServerError, HttpResponseRedirect, HttpResponseBadRequest
+import logging
+import requests
+
+from django.http import HttpResponseServerError, HttpResponseRedirect, HttpResponseBadRequest, Http404
 from django.core.urlresolvers import reverse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
@@ -9,10 +12,12 @@ from django.utils import translation
 from django.contrib.auth.decorators import login_required
 from urlparse import parse_qs
 from github import Github
-import requests
 from datetime import datetime
 
-from models import Person
+from models import Person, Assassination
+
+
+logger = logging.getLogger(__name__)
 
 
 # Decorators
@@ -81,8 +86,10 @@ def _create_user(user_info):
     except User.DoesNotExist:
         return None, None
 
+
 def _game_is_started():
     return datetime.now() >= settings.GAME_STARTS_AT
+
 
 def _subscriptions_ended():
     return datetime.now() >= settings.SUBSCRIPTIONS_END_AT
@@ -113,6 +120,7 @@ def profile(request):
 @templatable_view('login')
 def login(request):
     return {}
+
 
 def authorized(request):
 
@@ -176,8 +184,19 @@ def kill(request, user_id):
     if not _game_is_started():
         return HttpResponseRedirect(reverse('home'))
 
+    user = None
+    try:
+        user = User.objects.get(id=user_id)
+        p = Person.objects.get(user__id=user_id)
+    except User.DoesNotExist:
+        logger.debug('User not found %s' % user_id)
+        raise Http404
+    except Person.DoesNotExist:
+        if user and user.is_superuser:
+            return HttpResponseRedirect('/admin')
+        logger.warn('User without a Person object %s' % user_id)
+        raise Http404
 
-    p = Person.objects.get(user__id=user_id)
     username = p.name
     secret_word = p.secret_word
     is_killed = p.is_killed
@@ -193,8 +212,15 @@ def kill(request, user_id):
             p.target.date_killed = datetime.datetime.now()
             p.target.save()
 
+            old_target = p.target
             p.target = p.target.target
             p.save()
+
+            # Create the assassination event
+            Assassination(
+                assassin=p,
+                victim=old_target
+            ).save()
 
             message = "You've just killed your target.  Now kill the next one."
         else:

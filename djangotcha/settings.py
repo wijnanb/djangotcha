@@ -1,8 +1,10 @@
+import os
+import logging
+
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
 # path_to
-import os
 ROOT = os.path.abspath(os.path.join(os.path.abspath(os.path.dirname(__file__)), '..'))
 path_to = lambda *x: os.path.join(ROOT, *x)
 
@@ -17,23 +19,7 @@ ADMINS = ( )
 MANAGERS = ADMINS
 
 TIME_ZONE = 'Europe/Brussels'
-
-LANGUAGE_CODE = 'en-us'
-SOURCE_LANGUAGE_CODE = 'en-us'
-LANGUAGES = (
-    ('en', 'EN'),
-    ('fr', 'FR'),
-    ('nl', 'NL'),
-)
-
-LOCALE_PATHS = [ os.path.join(ROOT, 'locale') ]
-
-LOCALEURL_USE_ACCEPT_LANGUAGE = True
 SITE_ID = 1
-
-USE_I18N = True
-USE_L10N = True
-USE_TZ = True
 
 MEDIA_ROOT = ''
 MEDIA_URL = ''
@@ -97,29 +83,51 @@ INSTALLED_APPS = (
     'djangotcha',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.request',
+    'djangotcha.context_processors.stats'
+)
+
 LOGGING = {
     'version': 1,
-    'disable_existing_loggers': False,
-    'filters': {
-        'require_debug_false': {
-            '()': 'django.utils.log.RequireDebugFalse'
-        }
+    'formatters': {
+        'verbose': {
+            'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
     },
     'handlers': {
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler'
-        }
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
+        },
     },
     'loggers': {
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
+        'django': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'djangotcha': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
             'propagate': True,
         },
     }
 }
+
+# if DEBUG:
+    # make all loggers use the console.
+    # for logger in LOGGING['loggers']:
+    #     LOGGING['loggers'][logger]['handlers'] = ['console']
+
 
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.github.GithubBackend',
@@ -148,9 +156,6 @@ SECRET_WORDS = [
 from datetime import datetime
 SUBSCRIPTIONS_END_AT = datetime.strptime('13/5/2013 12:00', '%d/%m/%Y %H:%M')
 GAME_STARTS_AT = datetime.strptime('13/5/2013 12:00', '%d/%m/%Y %H:%M')
-
-# The absolute location of this website
-SERVER_LOCATION = 'http://localhost:8000/'
 
 try:
     execfile(path_to('djangotcha', 'settings_local.py'))

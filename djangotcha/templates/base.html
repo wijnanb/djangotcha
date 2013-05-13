@@ -24,8 +24,8 @@
         <meta name="twitter:url" content="{{ page_canonical_url }}">
         <meta name="twitter:image" content="{{ STATIC_URL }}img/favicon.png/">
 
-        <link href="{{ STATIC_URL }}/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-        <link href="{{ STATIC_URL }}/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
+        <link href="{{ STATIC_URL }}bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="{{ STATIC_URL }}bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" media="screen">
         <link rel="stylesheet" href="{{ STATIC_URL }}css/style.css">
         <link rel="shortcut icon" href="https://mobilevikings.com/static-2013.05.13.1dfd899/favicon.ico" type="image/x-icon" />
         <!--[if lt IE 9]>
@@ -49,6 +49,7 @@
             </div>
 
             <hr>
+            <p>Stats: {{ stats.total }}, killed: {{ stats.killed }}, alive: {{ stats.alive }}</p>
 
             {% block content %}{% endblock %}
 

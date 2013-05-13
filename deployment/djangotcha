@@ -3,6 +3,9 @@ server {
     server_name djangotcha.mobilevikings.com;
     proxy_set_header Host                   $host;
 
+	access_log  /var/log/nginx/djangotcha.access.log combined;
+    error_log   /var/log/nginx/djangotcha.error.log;
+
     location /static {
         autoindex on;
         alias /home/ubuntu/git/djangotcha/djangotcha/static;

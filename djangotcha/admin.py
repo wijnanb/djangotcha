@@ -1,4 +1,12 @@
 from django.contrib import admin
-from models import Person
+from models import Person, Assassination
 
-admin.site.register(Person)
+
+class PersonAdmin(admin.ModelAdmin):
+    list_display = ('name', 'github_user_id', 'is_killed', 'secret_word')
+admin.site.register(Person, PersonAdmin)
+
+
+class AssassinationAdmin(admin.ModelAdmin):
+    list_display = ('assassin', 'victim')
+admin.site.register(Assassination, AssassinationAdmin)

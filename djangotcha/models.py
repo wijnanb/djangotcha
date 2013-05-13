@@ -16,3 +16,19 @@ class Person(models.Model):
 
     def __unicode__(self):
         return "%s[%d]" % (self.name, self.id)
+
+
+class Assassination(models.Model):
+    """
+    Stores a history of assassinations
+    """
+    assassin = models.ForeignKey(User, related_name='assassin')
+    victim = models.ForeignKey(User, related_name='victim')
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('assassin', 'victim')
+
+    def __unicode__(self):
+        return '%s killed %s on %s' % (self.assassin, self.victim, self.created)
+
