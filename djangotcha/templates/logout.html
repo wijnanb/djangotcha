@@ -1,9 +1,14 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-</head>
-<body>
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
 
-</body>
-</html>
+{% block page_title %}{% trans 'Home' %}{% endblock %}
+
+{% block content %}
+
+    <div class="jumbotron">
+        <h1>Logged out!</h1>
+        <p>&lt;apu&gt;Thank you, if you survived, come again.&lt;/apu&gt;</p>
+    </div>
+
+{% endblock %}
