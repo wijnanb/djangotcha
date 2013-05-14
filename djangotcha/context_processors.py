@@ -11,8 +11,8 @@ def stats(request):
         'total': total,
         'killed': killed,
         'alive': alive,
-        'killed_percent': 0 if total==0 else round(killed/total)*100,
-        'alive_percent': 0 if total==0 else round(alive/total)*100,
+        'killed_percent': 0 if total==0 else round(float(killed)/float(total)*100),
+        'alive_percent': 0 if total==0 else round(float(alive)/float(total)*100),
     }
 
     return {
