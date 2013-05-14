@@ -3,6 +3,11 @@ server {
     server_name djangotcha.mobilevikings.com;
     proxy_set_header Host                   $host;
 
+    # http://www.acloudtree.com/how-to-deny-hosts-using-nginx/
+    if ($host !~* ^(djangotcha.mobilevikings.com)$ ) {
+            return 444;
+    }
+
 	access_log  /var/log/nginx/djangotcha/access.log combined;
     error_log   /var/log/nginx/djangotcha/error.log;
 
