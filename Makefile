@@ -27,6 +27,7 @@ watch:
 
 reload:
 	git pull;
+	./manage.py migrate djangotcha;
 	make compass;
 	sudo service djangotcha restart;
 
