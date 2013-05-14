@@ -11,6 +11,10 @@ server {
 	access_log  /var/log/nginx/djangotcha/access.log combined;
     error_log   /var/log/nginx/djangotcha/error.log;
 
+    location /static/admin {
+        try_files $uri @gunicorn;
+    }
+
     location /static {
         autoindex on;
         alias /home/ubuntu/git/djangotcha/djangotcha/static;
