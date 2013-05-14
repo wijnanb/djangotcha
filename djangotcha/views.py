@@ -109,7 +109,8 @@ def home(request):
     return {
         'avatar_url': avatar_url,
         'waiting': not _game_is_started(),
-        "start": settings.GAME_STARTS_AT.strftime('%d/%m/%y %H:%M')
+        "start": settings.GAME_STARTS_AT.strftime('%d/%m/%y %H:%M'),
+        "closes": settings.SUBSCRIPTIONS_END_AT.strftime('%d/%m/%y %H:%M'),
     }
 
 @login_required
@@ -178,9 +179,6 @@ def authorized(request):
 @login_required
 @templatable_view('kill')
 def kill(request, user_id):
-
-    print "_game_is_started: %s" % _game_is_started()
-
     if not _game_is_started():
         return HttpResponseRedirect(reverse('home'))
 
@@ -209,7 +207,7 @@ def kill(request, user_id):
 
         if p.target.secret_word == kill_secret_word:
             p.target.is_killed = True
-            p.target.date_killed = datetime.datetime.now()
+            p.target.date_killed = datetime.now()
             p.target.save()
 
             old_target = p.target
@@ -218,8 +216,8 @@ def kill(request, user_id):
 
             # Create the assassination event
             Assassination(
-                assassin=p,
-                victim=old_target
+                assassin=p.user,
+                victim=old_target.user
             ).save()
 
             message = "You've just killed your target.  Now kill the next one."

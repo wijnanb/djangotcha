@@ -154,8 +154,8 @@ SECRET_WORDS = [
 ]
 
 from datetime import datetime
-SUBSCRIPTIONS_END_AT = datetime.strptime('13/5/2013 12:00', '%d/%m/%Y %H:%M')
-GAME_STARTS_AT = datetime.strptime('13/5/2013 12:00', '%d/%m/%Y %H:%M')
+SUBSCRIPTIONS_END_AT = datetime.strptime('14/5/2013 11:00', '%d/%m/%Y %H:%M')
+GAME_STARTS_AT = datetime.strptime('14/5/2013 12:00', '%d/%m/%Y %H:%M')
 
 try:
     execfile(path_to('djangotcha', 'settings_local.py'))

@@ -20,7 +20,7 @@
     {% else %}
 
     <div class="jumbotron">
-        <h1 class="text-center">Hi {{username}}, this is your victim!</h1>
+        <h1 class="text-center">Hi {{username}},<br>this is your target!</h1>
         <p class="text-center lead">
             This is the person that is on top of you kill list.<br>
             It's easier to kill someone, when you learn about him/her<br>
@@ -32,7 +32,7 @@
                 <img src="{{target.avatar_url}}" class="avatar img-rounded"/>
             </div>
             <div class="media-body">
-                <h4 class="media-heading">{{target.name}} {{target.id}}</h4>
+                <h4 class="media-heading">{{target.name}}</h4>
                 <div class="description">
                     Hit him with a ray of water.  But remember: your kill is only valid when there are no witnesses around.
                 </div>
@@ -68,13 +68,13 @@
         <form class="form" action="" method="post">
             {% csrf_token %}
 
-                <label class="control-label text-center" for="secret_word">The secret word that your victim told you right before he died.</label>
+            <label class="control-label text-center" for="secret_word">The secret word that your victim told you right before he died.</label>
 
-                <div class="input-append">
-                    <input type="text" class="span2 input-large" id="secret_word" name="secret_word" placeholder="secret word">
-                    <button class="btn btn-danger" type="submit">Finish him!</button>
-                </div>
+            <div class="input-append">
+                <input type="text" class="span2 input-large" id="secret_word" name="secret_word" placeholder="secret word">
+                <button class="btn btn-danger" type="submit">Finish him!</button>
             </div>
+
         </form>
     </div>
     {% endif %}

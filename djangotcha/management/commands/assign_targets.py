@@ -9,7 +9,7 @@ class Command(BaseCommand):
     help = 'Assign random targets to everyone'
 
     def handle(self, *args, **options):
-        persons = Person.objects.all().order_by('?')
+        persons = Person.objects.filter(user__is_superuser=False).order_by('?')
 
         secret_words = settings.SECRET_WORDS
         random.shuffle(secret_words)

@@ -50,6 +50,7 @@
 
             <hr>
 
+            {% if stats.total > 0 %}
             <div class="progress">
                 <div class="bar bar-success" style="width: {{ stats.alive_percent }}%;">
                     alive: {{ stats.alive }}
@@ -58,6 +59,7 @@
                     killed: {{ stats.killed }}
                 </div>
             </div>
+            {% endif %}
 
             {% block content %}{% endblock %}
 
