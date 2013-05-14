@@ -8,8 +8,8 @@ server {
             return 444;
     }
 
-	access_log  /var/log/nginx/djangotcha/access.log combined;
-    error_log   /var/log/nginx/djangotcha/error.log;
+	access_log  /var/log/nginx/djangotcha.access.log combined;
+    error_log   /var/log/nginx/djangotcha.error.log;
 
     location /static/admin {
         try_files $uri @gunicorn;
