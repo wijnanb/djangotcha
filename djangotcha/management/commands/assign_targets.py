@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from djangotcha.models import Person
+from djangotcha.models import Person, Assassination
 from django.conf import settings
 import random
 
@@ -9,6 +9,8 @@ class Command(BaseCommand):
     help = 'Assign random targets to everyone'
 
     def handle(self, *args, **options):
+        Assassination.objects.all().delete()
+
         persons = Person.objects.filter(user__is_superuser=False).order_by('?')
 
         secret_words = settings.SECRET_WORDS
