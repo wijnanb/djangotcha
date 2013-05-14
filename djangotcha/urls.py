@@ -23,6 +23,7 @@ urlpatterns = patterns('',
     url(r'^kill/(?P<user_id>\d+)$', 'djangotcha.views.kill', name='kill'),
     url(r'^rules/$', 'djangotcha.views.rules', name='rules'),
     url(r'^closed/$', 'djangotcha.views.closed', name='closed'),
+    url(r'^winner/$', 'djangotcha.views.winner', name='winner'),
 
     # Social auth
     url(r'', include('social_auth.urls')),

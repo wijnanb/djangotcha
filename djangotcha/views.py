@@ -224,6 +224,11 @@ def kill(request, user_id):
         else:
             error = "That's not the right word.  The kill is not registered."
 
+    # test if game has ended
+    print p.target.id, " ", p.id
+    if p.target.id == p.id:
+        return HttpResponseRedirect('/winner')
+
     return {
         'message': message,
         'error': error,
@@ -240,6 +245,24 @@ def rules(request):
 
 @templatable_view('closed')
 def closed(request):
+    return {}
+
+@login_required
+@templatable_view('winner')
+def winner(request):
+    user = request.user
+    try:
+        p = Person.objects.get(user__id=user.id)
+    except Person.DoesNotExist:
+        if user and user.is_superuser:
+            return HttpResponseRedirect('/admin')
+        logger.warn('User without a Person object %s' % user_id)
+        raise Http404
+
+    # test if game has ended
+    if not p.target.id == p.id:
+        raise Http404
+
     return {}
 
 @templatable_view('404')
