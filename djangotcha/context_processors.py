@@ -10,7 +10,9 @@ def stats(request):
     stats = {
         'total': total,
         'killed': killed,
-        'alive': alive
+        'alive': alive,
+        'killed_percent': round(killed/total)*100,
+        'alive_percent': round(alive/total)*100,
     }
 
     return {

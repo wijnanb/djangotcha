@@ -45,11 +45,19 @@
                     <li><a class="" href="{% url 'logout' %}">Logout</a></li>
                     {% endif %}
                 </ul>
-                <h3 class="muted"><a href="/" title="E.T. Goes home ...">DjanGotcha</a></h3>
+                <h3 class="muted"><a href="/" title="E.T. go home ...">DjanGotcha</a></h3>
             </div>
 
             <hr>
-            <p>Stats: {{ stats.total }}, killed: {{ stats.killed }}, alive: {{ stats.alive }}</p>
+
+            <div class="progress">
+                <div class="bar bar-success" style="width: {{ stats.alive_percent }}%;">
+                    alive: {{ stats.alive }}
+                </div>
+                <div class="bar bar-danger" style="width: {{ stats.killed_percent }}%;">
+                    killed: {{ stats.killed }}
+                </div>
+            </div>
 
             {% block content %}{% endblock %}
 
