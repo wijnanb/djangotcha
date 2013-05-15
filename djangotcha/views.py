@@ -251,6 +251,13 @@ def rules(request):
 def closed(request):
     return {}
 
+@templatable_view('slide')
+def slide(request):
+    return {
+        "start": settings.GAME_STARTS_AT.strftime('%d/%m/%y %H:%M'),
+        "closes": settings.SUBSCRIPTIONS_END_AT.strftime('%d/%m/%y %H:%M'),
+    }
+
 @login_required
 @templatable_view('winner')
 def winner(request):
