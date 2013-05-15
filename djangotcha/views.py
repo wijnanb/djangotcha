@@ -155,11 +155,11 @@ def authorized(request):
                             #see: https://github.com/jacquev6/PyGithub/blob/master/github/AuthenticatedUser.py
                             user_info = {
                                 "avatar_url": user.avatar_url,
-                                "company": user.company if not None else 'Unemployed :)',
-                                "email": user.email if not None else '',
+                                "company": company or 'Unemployed :)',
+                                "email": user.email or'',
                                 "user_id": user.id,
-                                "location": user.location if not None else 'Homeless',
-                                "name": user.name,
+                                "location": user.location or 'Homeless',
+                                "name": user.name or 'nameless dude',
                                 "login": user.login,
                             }
 
