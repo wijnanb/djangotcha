@@ -241,7 +241,10 @@ def kill(request, user_id):
 
 @templatable_view('rules')
 def rules(request):
-    return {}
+    return {
+        "start": settings.GAME_STARTS_AT.strftime('%d/%m/%y %H:%M'),
+        "closes": settings.SUBSCRIPTIONS_END_AT.strftime('%d/%m/%y %H:%M'),
+    }
 
 @templatable_view('closed')
 def closed(request):

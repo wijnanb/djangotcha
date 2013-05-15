@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block page_title %}{% trans 'Home' %}{% endblock %}
+
+{% block content %}
+
+    <div class="jumbotron">
+        <h1>Rules</h1>
+        <ol>
+            <li>The jury is always right.</li>
+            <li>A kill is made by spraying water on your target. The water must hit the skin of the target, not his laptop.</li>
+            <li>There can be NO EYE WITNESSES. This rule is very important. A kill is only registered when no one saw the kill.  Try to isolate your target, and sneek up to him.</li>
+            <li>When you are killed. Give the secret word you got on the website to your assassin.</li>
+            <li>Safe period: You cannot kill anyone during the talks. <br>Between the talks, after the conference, in the pub, ... are all allowed.</li>
+            <li>You must register on the website before the game starts: {{closes}}</li>
+            <li>The game will start on: {{start}}</li>
+            <li>Get your shot gun from the guys with a Viking helmet.</li>
+            <li>Fair play: follow the rules and your heart</li>
+            <li>The jury can always add or change rules during the game. We will communicate these on twitter with hashtag <a href="https://twitter.com/search?q=%23djangotcha&amp;src=hash" target="_blank">#djangotcha</a></li>
+        </ol>
+    </div>
+
+{% endblock %}
