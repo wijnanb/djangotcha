@@ -67,7 +67,7 @@
 
             <div class="footer">
                 <p>Proudly presented by <a href="https://mobilevikings.com" target="_blank">Mobile Vikings</a> from <a href="http://www.google.be/images?q=belgian+waffles+and+smurfs" target="_blank">Belgium</a>.</p>
-                <p>Questions? Send a tweet with <a href="https://twitter.com/search/realtime?q=%23djangotcha&src=hash" target="_blank">#djangotcha</a> and we'll get back too your pretty soon.</p>
+                <p>Questions? Send a tweet with <a href="https://twitter.com/search/realtime?q=%23djangotcha&amp;src=hash" target="_blank">#djangotcha</a> and we'll get back too your pretty soon.</p>
             </div>
         </div>
         {% block data %}{% endblock %}
@@ -81,14 +81,16 @@
         <script src="{{ STATIC_URL }}bootstrap/js/bootstrap.min.js"></script>
         <script src="{{ STATIC_URL }}js/main.js"></script>
         {% block js_imports %}{% endblock %}
-        <script>
-          (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-          (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-          })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        <script type="text/javascript">
+          var _gaq = _gaq || [];
+          _gaq.push(['_setAccount', 'UA-3356674-37']);
+          _gaq.push(['_trackPageview']);
 
-          ga('create', 'UA-3356674-36', 'mobilevikings.com');
-          ga('send', 'pageview');
+          (function() {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+          })();
         </script>
     </body>
 </html>
