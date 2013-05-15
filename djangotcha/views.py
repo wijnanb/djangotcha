@@ -205,7 +205,8 @@ def kill(request, user_id):
     if 'secret_word' in request.POST:
         kill_secret_word = request.POST['secret_word']
 
-        if p.target.secret_word == kill_secret_word:
+        if p.target.secret_word and kill_secret_word and\
+                        p.target.secret_word.strip().lower() == kill_secret_word.strip().lower():
             p.target.is_killed = True
             p.target.date_killed = datetime.now()
             p.target.save()

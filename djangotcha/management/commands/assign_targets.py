@@ -10,10 +10,6 @@ class Command(BaseCommand):
     help = 'Assign random targets to everyone'
 
     def handle(self, *args, **options):
-        if True:
-            read()
-            return
-
         Assassination.objects.all().delete()
 
         persons = Person.objects.filter(user__is_superuser=False).order_by('?')
