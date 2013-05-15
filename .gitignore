@@ -9,3 +9,4 @@ settings_local.py
 tmp/*
 
 .idea/*
+djangotcha/management/commands/words
