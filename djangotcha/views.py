@@ -54,7 +54,7 @@ def _create_user(user_info):
         lastname = tmp_name[1]
     except:
         firstname = user_info.get('name', None)
-        lastname = None
+        lastname = ''
 
     try:
         if _subscriptions_ended():
@@ -155,10 +155,10 @@ def authorized(request):
                             #see: https://github.com/jacquev6/PyGithub/blob/master/github/AuthenticatedUser.py
                             user_info = {
                                 "avatar_url": user.avatar_url,
-                                "company": user.company,
-                                "email": user.email,
+                                "company": user.company if not None else 'Unemployed :)',
+                                "email": user.email if not None else '',
                                 "user_id": user.id,
-                                "location": user.location,
+                                "location": user.location if not None else 'Homeless',
                                 "name": user.name,
                                 "login": user.login,
                             }
