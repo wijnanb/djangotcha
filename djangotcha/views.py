@@ -58,7 +58,7 @@ def _create_user(user_info):
 
     try:
         if _subscriptions_ended():
-            user, created = User.objects.get(username=user_info['login'])
+            user = User.objects.get(username=user_info['login'])
         else:
             user, created = User.objects.get_or_create(username=user_info['login'], defaults={
                 'username': user_info['login'],
