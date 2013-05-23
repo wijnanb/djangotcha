@@ -60,6 +60,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.messages.middleware.MessageMiddleware',
 )
 
 ROOT_URLCONF = 'djangotcha.urls'
@@ -154,8 +155,8 @@ SECRET_WORDS = [
 ]
 
 from datetime import datetime
-SUBSCRIPTIONS_END_AT = datetime.strptime('15/5/2013 13:00', '%d/%m/%Y %H:%M')
-GAME_STARTS_AT = datetime.strptime('15/5/2013 14:00', '%d/%m/%Y %H:%M')
+SUBSCRIPTIONS_END_AT = datetime.strptime('15/5/2013 16:00', '%d/%m/%Y %H:%M')
+GAME_STARTS_AT = datetime.strptime('15/5/2013 16:15', '%d/%m/%Y %H:%M')
 
 try:
     execfile(path_to('djangotcha', 'settings_local.py'))

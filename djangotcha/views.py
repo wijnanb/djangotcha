@@ -54,11 +54,11 @@ def _create_user(user_info):
         lastname = tmp_name[1]
     except:
         firstname = user_info.get('name', None)
-        lastname = None
+        lastname = ''
 
     try:
         if _subscriptions_ended():
-            user, created = User.objects.get(username=user_info['login'])
+            user = User.objects.get(username=user_info['login'])
         else:
             user, created = User.objects.get_or_create(username=user_info['login'], defaults={
                 'username': user_info['login'],
@@ -155,11 +155,11 @@ def authorized(request):
                             #see: https://github.com/jacquev6/PyGithub/blob/master/github/AuthenticatedUser.py
                             user_info = {
                                 "avatar_url": user.avatar_url,
-                                "company": user.company,
-                                "email": user.email,
+                                "company": user.company or 'Unemployed :)',
+                                "email": user.email or'',
                                 "user_id": user.id,
-                                "location": user.location,
-                                "name": user.name,
+                                "location": user.location or 'Homeless',
+                                "name": user.name or 'nameless dude',
                                 "login": user.login,
                             }
 
@@ -250,6 +250,13 @@ def rules(request):
 @templatable_view('closed')
 def closed(request):
     return {}
+
+@templatable_view('slide')
+def slide(request):
+    return {
+        "start": settings.GAME_STARTS_AT.strftime('%d/%m/%y %H:%M'),
+        "closes": settings.SUBSCRIPTIONS_END_AT.strftime('%d/%m/%y %H:%M'),
+    }
 
 @login_required
 @templatable_view('winner')

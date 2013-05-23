@@ -24,6 +24,8 @@ urlpatterns = patterns('',
     url(r'^rules/$', 'djangotcha.views.rules', name='rules'),
     url(r'^closed/$', 'djangotcha.views.closed', name='closed'),
     url(r'^winner/$', 'djangotcha.views.winner', name='winner'),
+    url(r'^slide/$', 'djangotcha.views.slide', name='slide'),
+
 
     # Social auth
     url(r'', include('social_auth.urls')),
